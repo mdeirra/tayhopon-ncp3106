@@ -1,0 +1,3116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deirra - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Display:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter Display', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+        /* Custom CSS Variables for Theming */
+        :root {
+            /* Light Theme - New Palette */
+            --olivine: rgba(150,178,127,1);
+            --oyster-pink: rgba(234,206,210,1);
+            --chelsea-cucumber: rgba(139,167,110,1);
+            --spring-wood: rgba(246,247,240,1);
+            --delta: rgba(177,177,168,1);
+            --tea: rgba(196,187,175,1);
+            --olivine-alt: rgba(156,180,115,1);
+            --battleship-gray: rgba(131,149,125,1);
+            --thatch: rgba(191,162,168,1);
+            --bazaar: rgba(151,130,132,1);
+            
+            /* Applied Theme Variables */
+            --primary-gradient: linear-gradient(to right, var(--olivine), var(--chelsea-cucumber));
+            --primary-hover-gradient: linear-gradient(to right, var(--olivine-alt), var(--battleship-gray));
+            --primary-text: var(--olivine);
+            --primary-bg: var(--chelsea-cucumber);
+            --primary-border: var(--delta);
+            --bg-primary: var(--spring-wood);
+            --bg-secondary: var(--oyster-pink);
+            --text-primary: var(--battleship-gray);
+            --text-secondary: var(--bazaar);
+            --text-tertiary: var(--thatch);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --nav-bg: rgba(246, 247, 240, 0.9);
+            --border-color: var(--delta);
+            --gradient-bg: linear-gradient(to bottom right, var(--spring-wood), var(--oyster-pink));
+        }
+
+        .dark {
+            /* Dark Theme - New Palette */
+            --ebb: rgba(232,227,227,1);
+            --black: rgba(5,5,5,1);
+            --dusty-gray: rgba(158,151,150,1);
+            --mahogany: rgba(93,6,12,1);
+            --van-cleef: rgba(75,13,14,1);
+            --opium: rgba(138,102,103,1);
+            --zambezi: rgba(101,89,89,1);
+            --emperor: rgba(80,68,66,1);
+            --mountbatten-pink: rgba(164,124,140,1);
+            --turkish-rose: rgba(184,116,132,1);
+            
+            /* Applied Dark Theme Variables */
+            --primary-gradient: linear-gradient(to right, var(--mahogany), var(--van-cleef));
+            --primary-hover-gradient: linear-gradient(to right, var(--turkish-rose), var(--mountbatten-pink));
+            --primary-text: var(--turkish-rose);
+            --primary-bg: var(--mahogany);
+            --primary-border: var(--opium);
+            --bg-primary: var(--black);
+            --bg-secondary: rgba(5,5,5,0.95);
+            --text-primary: var(--ebb);
+            --text-secondary: var(--dusty-gray);
+            --text-tertiary: var(--zambezi);
+            --card-bg: rgba(5,5,5,0.9);
+            --nav-bg: rgba(5,5,5,0.95);
+            --border-color: var(--emperor);
+            --gradient-bg: linear-gradient(135deg, var(--black) 0%, rgba(93,6,12,0.1) 50%, rgba(164,124,140,0.05) 100%);
+        }
+
+        /* Carousel specific styles */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+            width: 300%; /* 3 images * 100% each */
+        }
+
+        .carousel-item {
+            flex-shrink: 0;
+            width: 33.333%; /* 100% / 3 images */
+            height: 100%;
+            position: relative;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Custom Modern Accordion Styles */
+        .accordion {
+            border: none;
+            gap: 1.5rem;
+        }
+
+        .accordion-item {
+            border: none;
+            margin-bottom: 1.5rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            background: var(--card-bg);
+        }
+
+        .accordion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .accordion-button {
+            border: none;
+            box-shadow: none;
+            padding: 2rem;
+            border-radius: 16px 16px 0 0;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, var(--primary-bg), var(--primary-text));
+            color: white;
+            width: 100%;
+            text-align: left;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+        }
+
+        .accordion-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .accordion-button:hover::before {
+            left: 100%;
+        }
+
+        .accordion-button::after {
+            content: '+';
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .accordion-button:not(.collapsed)::after {
+            content: '−';
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border: none;
+            outline: 2px solid var(--primary-border);
+            outline-offset: 2px;
+        }
+
+        .accordion-collapse {
+            border: none;
+            background: var(--card-bg);
+        }
+
+        .accordion-body {
+            border: none;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--card-bg);
+        }
+
+        .accordion-collapse:not(.show) {
+            display: none;
+        }
+
+        .accordion-collapse.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 500px;
+            }
+        }
+
+        /* Experience header styling */
+        .experience-header {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .experience-badge {
+            position: absolute;
+            top: -8px;
+            right: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .carousel-button.prev {
+            left: 1rem;
+        }
+
+        .carousel-button.next {
+            right: 1rem;
+        }
+
+        /* Custom animations from original code */
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+
+        /* Custom hover effects from original code */
+        .group:hover .group-hover\:scale-105 { transform: scale(1.05); }
+        .group:hover .group-hover\:translate-x-1 { transform: translateX(0.25rem); }
+        .group:hover .group-hover\:rotate-45 { transform: rotate(45deg); }
+        .group:hover .group-hover\:rotate-12 { transform: rotate(12deg); }
+
+        /* Fade-in-on-scroll styles */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 5% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            width: 90%; /* Could be more or less, depending on screen size */
+            max-width: 600px;
+            border-radius: 0.5rem;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .close-button {
+            color: var(--text-tertiary);
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--primary-text);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Accordion styles */
+        .accordion-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .accordion-trigger {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 1rem 0;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding-bottom: 0;
+            color: var(--text-secondary);
+        }
+        .accordion-content.open {
+            max-height: 200px; /* Adjust as needed */
+            padding-bottom: 1rem;
+        }
+        .accordion-collapse {
+            transition: all 0.3s ease !important;
+        }
+        .accordion-body {
+            min-height: 100px !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        .accordion-collapse.show {
+            display: block !important;
+            height: auto !important;
+        }
+        .accordion-trigger svg {
+            transition: transform 0.3s ease-out;
+        }
+        .accordion-trigger.open svg {
+            transform: rotate(180deg);
+        }
+
+        /* Ticker */
+        .ticker-container {
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 20px 0;
+        }
+        .ticker-container::before,
+        .ticker-container::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 32px; /* fade width */
+        pointer-events: none;
+        z-index: 2;
+        }
+        .ticker-container::before {
+        left: 0;
+        background: linear-gradient(to right, var(--transparent), transparent);
+        }
+        .ticker-container::after {
+        right: 0;
+        background: linear-gradient(to left, var(--transparent), transparent);
+        }
+       .ticker-text {
+        display: inline-flex;
+        align-items: center;
+        gap: 50px;          /* spacing between images */
+        flex-wrap: nowrap;  /* stay on one line */
+        padding-left: 100%;
+        animation: ticker 40s linear infinite;
+        }
+
+        .ticker-img {
+        width: auto;
+        height: 60px;
+        max-width: 80px;
+        object-fit: contain;
+        flex: 0 0 auto;     /* don't shrink */
+        }
+
+        .ticker-img:last-child { margin-right: 0; }
+        @keyframes ticker {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-100%); }
+        }
+
+        /* Educational (Services-style) accordion */
+        .edu-wrap{position:relative;isolation:isolate}
+        .edu-accent{height:6px;width:160px;margin:12px auto 0;border-radius:9999px;background:linear-gradient(90deg,var(--primary-text),var(--primary-bg),var(--primary-text));background-size:200% 100%;animation:eduBar 4s linear infinite}
+        @keyframes eduBar{to{background-position:200% 0}}
+
+        .edu-grid{display:grid;grid-template-columns:1fr;gap:22px}
+        @media (min-width:960px){.edu-grid{grid-template-columns:.55fr 1fr;gap:28px}.edu-sticky{position:sticky;top:24px;align-self:start}}
+
+        .edu-sticky-card{border-radius:16px;padding:24px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0)) border-box,var(--card-bg);border:1px solid var(--border-color);box-shadow:0 12px 30px rgba(0,0,0,.15)}
+        .edu-sticky-card h3{margin:0 0 8px;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary)}
+        .edu-sticky-card p{margin:0;color:var(--text-primary);opacity:.9;font-size:14px;line-height:1.7}
+
+        .edu-acc{display:grid;gap:14px}
+        .edu-item{position:relative;border-radius:16px;overflow:clip;background:var(--card-bg);border:1px solid var(--border-color)}
+        .edu-item::before{content:"";position:absolute;inset:0;padding:1px;border-radius:inherit;background:conic-gradient(from 0deg, var(--primary-bg), rgba(3, 2, 2, 0.7), var(--primary-bg));-webkit-mask:linear-gradient(#605e5e 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.6;pointer-events:none;transition:opacity .3s}
+        .edu-item[aria-current="true"]::before,.edu-item:hover::before{opacity:1}
+
+        .edu-trigger{width:100%;border:0;outline:0;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0)) border-box,var(--card-bg);color:inherit;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;padding:18px 20px;cursor:pointer;border-bottom:1px solid var(--border-color)}
+        .edu-num{font-weight:800;font-size:18px;line-height:1;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(90deg,rgba(130, 127, 129, 0.16),rgba(34, 30, 30, 0.16));color:#3b3939;border:1px solid rgba(255,255,255,.06)}
+        .edu-title{font-size:clamp(16px,1.6vw,18px);font-weight:700}
+        .edu-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px;color:var(--text-secondary);font-size:12px}
+        .edu-icon{width:18px;height:18px;color:var(--text-secondary);transition:transform .3s,color .3s}
+        .edu-item[aria-current="true"] .edu-icon{transform:rotate(180deg);color:var(--primary-bg)}
+
+        .edu-panel{overflow:hidden;max-height:0;transition:max-height .45s cubic-bezier(.2,.7,.2,1);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0)) border-box,var(--card-bg)}
+        .edu-content{padding:18px 20px 20px;display:grid;gap:14px}
+        .edu-cols{display:grid;gap:18px}
+        @media (min-width:720px){.edu-cols{grid-template-columns:1.1fr .9fr}}
+        .edu-desc{color:var(--text-secondary);font-size:14px;line-height:1.7}
+        .edu-tags{display:flex;flex-wrap:wrap;gap:10px}
+        .edu-tag{font-size:12px;color:#fff;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg, var(--primary-bg), rgba(4, 1, 1, 0.9));border:1px solid rgba(255,255,255,.06)}
+        .edu-bullets{margin:0;padding-left:18px;color:var(--text-primary);opacity:.9;font-size:14px;line-height:1.8}
+        /* Steps cards (Seminars) */
+        .steps{max-width:920px}
+        .step{max-width:640px}
+
+        /* Awards & Certifications Styles */
+        .awards-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .featured-award {
+            display: flex;
+            justify-content: center;
+        }
+
+        .award-card.featured {
+            position: relative;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 600px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, var(--card-bg), rgba(255,255,255,0.05));
+        }
+
+        .award-card.featured::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, var(--primary-bg), transparent, var(--primary-text));
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .award-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary-bg);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 2;
+        }
+
+        .award-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .award-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-bg), var(--primary-text));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .award-content h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .award-issuer {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .award-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .award-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .award-date, .award-type {
+            background: var(--bg-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .cert-card {
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .cert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .cert-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-bg), var(--primary-text));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .cert-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary-bg);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 2;
+        }
+
+        .cert-content h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .cert-issuer {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .cert-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cert-skills span {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .cert-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* FAQs Styles */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            background: var(--card-bg);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(var(--primary-rgb), 0.05);
+        }
+
+        .faq-question.active {
+            background: rgba(var(--primary-rgb), 0.08);
+            color: var(--primary-bg);
+        }
+
+        .faq-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: var(--primary-bg);
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--bg-primary);
+        }
+
+        .faq-answer-content {
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Contact Form Styles */
+        .form-input {
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-bg) !important;
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .contact-item:hover {
+            background: rgba(var(--primary-rgb), 0.1) !important;
+        }
+
+        /* Footer & Bottom Navigation Styles */
+        .social-link:hover {
+            background: rgba(var(--primary-rgb), 0.2) !important;
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .nav-link:hover {
+            color: var(--primary-bg) !important;
+        }
+
+        .bottom-nav {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .step-card{
+        position:relative; background:var(--card-bg); border:1px solid var(--border-color);
+        border-radius:18px; padding:28px; box-shadow:0 24px 60px rgba(0,0,0,.25);
+        transition:transform .25s ease, box-shadow .25s ease;
+        }
+        .step-card:hover{ transform:translateY(-4px); box-shadow:0 28px 70px rgba(0,0,0,.35) }
+        .step-badge{
+        position:absolute; top:-14px; left:-14px; width:40px; height:40px; border-radius:12px;
+        display:grid; place-items:center; font-weight:800; color:#fff;
+        background:linear-gradient(90deg, rgba(244,114,182,.18), rgba(239,68,68,.18));
+        border:1px solid rgba(255,255,255,.12);
+        box-shadow:inset 0 0 30px rgba(244,114,182,.18);
+        }
+        .step-title{font-weight:700; margin-bottom:.5rem; color:var(--text-primary)}
+        .step-text{color:var(--text-secondary)}
+        @media (min-width:768px){ .step:nth-child(even){ margin-left:auto } }
+        .edu-accent{
+        height: 6px;
+        width: 160px;          /* adjust width */
+        margin: 12px auto 0;   /* centers under the title */
+        border-radius: 9999px; /* pill shape */
+        background: linear-gradient(90deg, var(--primary-text), var(--primary-bg), var(--primary-text));
+        background-size: 200% 100%;
+        animation: eduBar 4s linear infinite;
+        }
+        @keyframes eduBar { to { background-position: 200% 0; } }
+
+        /* Modern Project Modal System */
+        .project-modal .dialog {
+          width: min(95vw, 1200px);
+          max-height: 90vh;
+          margin: 2rem auto;
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-color);
+          border-radius: 20px;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+          overflow: hidden;
+        }
+
+        .project-modal .head {
+          background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+          color: white;
+          padding: 1.5rem 2rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: none;
+        }
+
+        .project-modal .head h3 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          margin: 0;
+        }
+
+        .project-modal .close-x {
+          font-size: 1.5rem;
+          padding: 0.5rem;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.1);
+          border: none;
+          color: white;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          outline: none;
+        }
+
+        .project-modal .close-x:hover {
+          background: rgba(255, 255, 255, 0.2);
+          transform: scale(1.1);
+        }
+
+        /* Flexible Modal Body */
+        .project-modal .body {
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          min-height: fit-content;
+        }
+
+        /* Image Container with Size Variants */
+        .pmodal-image-container {
+          position: relative;
+          border-radius: 16px;
+          overflow: hidden;
+          background: var(--bg-primary);
+          border: 1px solid var(--border-color);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Size variants for easy adjustment */
+        .pmodal-image-container.size-small { height: 250px; }
+        .pmodal-image-container.size-medium { height: 350px; }
+        .pmodal-image-container.size-large { height: 450px; }
+        .pmodal-image-container.size-xl { height: 550px; }
+
+        .pmodal-image-container img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          object-position: center;
+          transition: transform 0.3s ease;
+        }
+
+        .pmodal-image-container:hover img {
+          transform: scale(1.02);
+        }
+
+        /* Navigation Buttons */
+        .pmodal-nav {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1rem;
+          pointer-events: none;
+        }
+
+        .pmodal-btn {
+          pointer-events: auto;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          backdrop-filter: blur(10px);
+        }
+
+        .pmodal-btn:hover {
+          background: rgba(0, 0, 0, 0.9);
+          transform: scale(1.1);
+        }
+
+        /* Content Section */
+        .pmodal-content {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .pmodal-description {
+          font-size: 0.95rem;
+          line-height: 1.6;
+          color: var(--text-secondary);
+          margin: 0;
+        }
+
+        .pmodal-badges {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .pmodal-meta {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1rem;
+          font-size: 0.875rem;
+          color: var(--text-secondary);
+          padding-top: 0.5rem;
+          border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+          .project-modal .body {
+            flex-direction: row;
+            gap: 2rem;
+          }
+          
+          .pmodal-image-container {
+            flex: 1.2;
+          }
+          
+          .pmodal-content {
+            flex: 0.8;
+            justify-content: flex-start;
+          }
+        }
+
+        @media (max-width: 767px) {
+          .project-modal .dialog {
+            width: 95vw;
+            margin: 1rem auto;
+          }
+          
+          .project-modal .body {
+            padding: 1.5rem;
+            gap: 1rem;
+          }
+          
+          .project-modal .head {
+            padding: 1rem 1.5rem;
+          }
+          
+          .project-modal .head h3 {
+            font-size: 1.25rem;
+          }
+          
+          .pmodal-image-container.size-small { height: 200px; }
+          .pmodal-image-container.size-medium { height: 280px; }
+          .pmodal-image-container.size-large { height: 350px; }
+          .pmodal-image-container.size-xl { height: 420px; }
+        }
+
+.pmodal-slider{ 
+  width: 100%; 
+  height: 100%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+}
+.pmodal-slider img{ 
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; 
+  object-position: center;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  max-width: 100%;
+  max-height: 100%;
+}
+.pmodal-slider img:hover {
+  transform: scale(1.02);
+}
+.pmodal-nav{ position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; padding:0 8px; pointer-events:none; }
+.pmodal-btn{
+  pointer-events:auto; width:36px; height:36px; display:grid; place-items:center;
+  border-radius:9999px; background:rgba(255,255,255,.1); color:#fff; border:1px solid rgba(255,255,255,.15);
+}
+.pmodal-btn:hover{ background:rgba(255,255,255,.2); }
+
+.badges{ display:flex; flex-wrap:wrap; gap:8px; }
+.badge{
+  font-size:12px; padding:6px 10px; border-radius:9999px; color:#fff;
+  background: linear-gradient(90deg, #f472b6, #ef4444);
+  border:1px solid rgba(255,255,255,.12);
+}
+.meta{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; color:var(--text-secondary); font-size:12px; }
+.pmodal-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:18px; }
+.btn-ghost{ border:1px solid var(--border-color); padding:8px 12px; border-radius:10px; color:var(--text-primary); }
+.btn-primary{ padding:8px 12px; border-radius:10px; color:#fff; background: var(--primary-gradient); }
+
+/* Enhanced Projects Section Styles */
+.project-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.project-card:hover {
+  transform: translateY(-8px) rotateX(2deg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.project-image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+}
+
+.project-image-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.project-card:hover .project-image-container::before {
+  left: 100%;
+}
+
+.project-status-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 10;
+}
+
+.tech-stack-badges {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+
+.tech-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.tech-badge:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.project-content {
+  padding: 24px;
+  background: var(--card-bg);
+  border-radius: 0 0 12px 12px;
+}
+
+.project-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--text-primary), var(--primary-text));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.project-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.features-section h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.features-list li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+.features-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--primary-text);
+  font-weight: bold;
+}
+
+.project-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.action-button {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary-action {
+  background: linear-gradient(135deg, var(--primary-bg), var(--primary-text));
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.primary-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.secondary-action {
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.secondary-action:hover {
+  background: var(--border-color);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.github-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+/* Enhanced ticker styles */
+.ticker-container {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 30px 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  border-radius: 16px;
+  margin-bottom: 40px;
+}
+
+.ticker-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: nowrap;
+  padding-left: 100%;
+  animation: ticker 50s linear infinite;
+}
+
+.ticker-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.3s ease;
+}
+
+.ticker-item:hover {
+  transform: scale(1.1);
+}
+
+.ticker-img {
+  width: auto;
+  height: 60px;
+  max-width: 80px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.ticker-img:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transform: rotate(5deg);
+}
+
+.ticker-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  white-space: nowrap;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+/* Call to action section */
+.cta-section {
+  text-align: center;
+  margin-top: 60px;
+  padding: 40px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.cta-text {
+  font-size: 18px;
+  margin-bottom: 24px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.cta-button {
+  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  color: white;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.3);
+}
+
+.cta-button:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 12px 32px rgba(236, 72, 153, 0.4);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .project-actions {
+    flex-direction: column;
+  }
+  
+  .ticker-container {
+    padding: 20px 0;
+  }
+  
+  .ticker-text {
+    gap: 30px;
+  }
+  
+  .ticker-img {
+    width: auto;
+    height: 50px;
+    max-width: 70px;
+    object-fit: contain;
+  }
+  
+  .cta-section {
+    padding: 30px 20px;
+    margin-top: 40px;
+  }
+  
+  .cta-button {
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+}
+    </style>
+</head>
+<body class="theme-light" style="
+    background: var(--gradient-bg);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+">
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500">
+        <div id="nav-container" class="mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-500 max-w-6xl">
+            <div id="nav-content" class="flex justify-between items-center h-16 transition-all duration-500 px-8 mx-4 rounded-2xl backdrop-blur-md shadow-lg border" style="background: var(--nav-bg); border-color: var(--border-color);">
+                <div class="flex items-center space-x-3">
+                    <button onclick="scrollToSection('home')" class="text-2xl font-bold transition-colors duration-300" style="color: var(--text-primary);">
+                        Deirra
+                    </button>
+                    <span id="current-time" class="text-sm hidden sm:block" style="color: var(--text-secondary);"></span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="scrollToSection('home')" class="text-sm font-medium transition-colors duration-200" style="color: var(--text-tertiary);">About</button>
+                    <button onclick="scrollToSection('projects')" class="text-sm font-medium transition-colors duration-200" style="color: var(--text-tertiary);">Projects</button>
+                    <button onclick="scrollToSection('experience')" class="text-sm font-medium transition-colors duration-200" style="color: var(--text-tertiary);">Experience</button>
+                    <button onclick="scrollToSection('contact')" class="text-sm font-medium transition-colors duration-200" style="color: var(--text-tertiary);">Contact</button>
+                    <button id="theme-toggle" class="relative w-10 h-10 rounded-full border flex items-center justify-center hover:shadow-md transition-all duration-300" style="background: var(--card-bg); border-color: var(--border-color);">
+                        <svg id="theme-icon" class="w-5 h-5 transition-colors duration-300" style="color: var(--text-tertiary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    <button onclick="scrollToSection('contact')" class="bg-black hover:bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-200">
+                        Hire Me
+                    </button>
+                    <button class="transition-colors duration-200" style="color: var(--text-tertiary);">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center space-x-4">
+                    <button id="mobile-theme-toggle" class="relative w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300" style="background: var(--card-bg); border-color: var(--border-color);">
+                        <svg id="mobile-theme-icon" class="w-4 h-4" style="color: var(--text-tertiary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    <button id="mobile-menu-toggle" class="p-2 transition-colors duration-200" style="color: var(--text-tertiary);">
+                        <svg id="menu-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden backdrop-blur-md border-t transition-all duration-300 hidden" style="background: var(--card-bg); border-color: var(--border-color);">
+            <div class="px-4 py-6 space-y-4">
+                <button onclick="scrollToSection('home')" class="block w-full text-left py-2 text-base font-medium transition-colors duration-200" style="color: var(--text-tertiary);">About</button>
+                <button onclick="scrollToSection('projects')" class="block w-full text-left py-2 text-base font-medium transition-colors duration-200" style="color: var(--text-tertiary);">Projects</button>
+                <button onclick="scrollToSection('experience')" class="block w-full text-left py-2 text-base font-medium transition-colors duration-200" style="color: var(--text-tertiary);">Experience</button>
+                <button onclick="scrollToSection('contact')" class="block w-full text-left py-2 text-base font-medium transition-colors duration-200" style="color: var(--text-tertiary);">Contact</button>
+                <div class="pt-4 border-t border-gray-200">
+                    <button onclick="scrollToSection('contact')" class="w-full bg-black hover:bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-200">
+                        Hire Me
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="pt-16 min-h-screen flex flex-col relative overflow-hidden">
+        <!-- Deirra -->
+        <div class="flex-1 flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="flex flex-col justify-center" data-aos="zoom-out-right">
+                    <p class="text-lg font-semibold space-x-2 lg:text-2xl ml-3" style="color: var(--text-secondary);">Hi! This is</p>
+                    <div class="mb-8">
+                        <h1 class="text-6xl sm:text-xl md:text-8xl lg:text-9xl xl:text-[11rem] font-black leading-none tracking-tight mb-4" style="color: var(--text-primary);">
+                            Deirra
+                        </h1>
+                        <div class="flex items-center space-x-4 mb-8">
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                            <span class="text-sm uppercase tracking-wider" style="color: var(--text-secondary);">
+                                Available for opportunities
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center space-y-6" data-aos="zoom-out-up"> 
+                    <div>
+                        <p class="text-sm sm:text-base leading-relaxed max-w-md" style="color: var(--text-secondary);">
+                            Marianne Deirra, usually called Deirra, is an aspiring computer engineer who is motivated to
+                            constantly develop her skills and grow professionally with extensive knowledge.
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <a href="https://www.facebook.com/deirruhig" target="_blank" rel="noopener noreferrer" class="transition-colors duration-300" style="color: var(--text-tertiary);">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/mdeirra/" target="_blank" rel="noopener noreferrer" class="transition-colors duration-300" style="color: var(--text-tertiary);">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323C5.902 8.198 7.053 7.708 8.35 7.708s2.448.49 3.323 1.297c.897.875 1.387 2.026 1.387 3.323s-.49 2.448-1.297 3.323c-.875.897-2.026 1.387-3.323 1.387zm7.718 0c-1.297 0-2.448-.49-3.323-1.297-.897-.875-1.387-2.026-1.387-3.323s.49-2.448 1.297-3.323c.875-.897 2.026-1.387 3.323-1.387s2.448.49 3.323 1.297c.897.875 1.387 2.026 1.387 3.323s-.49 2.448-1.297 3.323c-.875.897-2.026 1.387-3.323 1.387z"/>
+                            </svg>
+                        </a>
+                        <a href="https://github.com/mdeirra" target="_blank" rel="noopener noreferrer" class="transition-colors duration-300" style="color: var(--text-tertiary);">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/marianne-deirra-505832281/" target="_blank" rel="noopener noreferrer" class="transition-colors duration-300" style="color: var(--text-tertiary);">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                        <a href="mailto:tayhoponmarianne@gmail.com" class="transition-colors duration-300" style="color: var(--text-tertiary);">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="flex items-center space-x-2 text-sm pt-2" style="color: var(--text-secondary);">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span>Manila, Philippines</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 relative z-10 w-full">
+        <div class="w-full h-[60vh] lg:h-[70vh] rounded-2xl overflow-hidden shadow-2xl carousel-container">
+            <div id="hero-carousel-track" class="carousel-track h-full">
+                <div class="carousel-item">
+                    <img src="./ganda.jpg" alt="Deirra Portrait 1" class="w-full h-full object-cover grayscale transition-all duration-700 hover:grayscale-0" onerror="console.log('Failed to load ganda.jpg'); this.style.background='red';">
+                </div>
+                <div class="carousel-item">
+                    <img src="./two.jpg" alt="Deirra Portrait 2" class="w-full h-full object-cover grayscale transition-all duration-700 hover:grayscale-0" onerror="console.log('Failed to load two.jpg'); this.style.background='green';">
+                </div>
+                <div class="carousel-item">
+                    <img src="./cute.jpg" alt="Deirra Portrait 3" class="w-full h-full object-cover grayscale transition-all duration-700 hover:grayscale-0" onerror="console.log('Failed to load cute.jpg'); this.style.background='blue';">
+                </div>
+            </div>
+            <button class="carousel-button prev" onclick="moveCarousel(-1)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button class="carousel-button next" onclick="moveCarousel(1)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+        </div>
+    </div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-1/4 right-1/4 w-64 h-64 rounded-full opacity-10 blur-3xl" style="background: var(--primary-gradient);"></div>
+        <div class="absolute bottom-1/4 left-1/4 w-96 h-96 rounded-full opacity-5 blur-3xl" style="background: var(--primary-gradient);"></div>
+    </div>
+    </section>
+
+<section id="educational-background" class="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto fade-in-section overflow-hidden">
+
+  <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-4" style="color: var(--text-primary);">
+    Educational Background
+  </h2>
+  <div class="edu-accent mb-4"></div>
+  <p class="text-center max-w-2xl mx-auto mb-12 text-sm md:text-base" style="color: var(--text-secondary);">
+    A journey of growth, grit, and consistent excellence.
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Card 1 -->
+    <div class="group relative p-[1px] rounded-2xl transition-transform duration-300 hover:-translate-y-1" data-aos="fade-right" style="background: var(--);">
+      <div class="h-full rounded-2xl shadow-md bg-[var(--card-bg)] border overflow-hidden" style="border-color: var(--border-color);">
+        <div class="relative overflow-hidden">
+          <img src="ntc.jpg" alt="Secondary Education" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105">
+          <span class="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-semibold rounded-full text-white" style="background: var(--primary-bg);">
+            2016 – 2020
+          </span>
+        </div>
+        <div class="p-6 space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full" style="background: var(--primary-bg); color: white;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422A12.083 12.083 0 0112 21 12.083 12.083 0 015.84 10.578L12 14z"/></svg>
+            </span>
+            <h3 class="text-xl font-semibold" style="color: var(--text-primary);">National Teacher's College</h3>
+          </div>
+          <p class="text-sm" style="color: var(--text-secondary);">Secondary Education</p>
+          <div class="flex flex-wrap gap-2 pt-1">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold text-white" style="background: var(--primary-bg);">Graduated With Honors</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="group relative p-[1px] rounded-2xl transition-transform duration-300 hover:-translate-y-1" data-aos="fade-down" style="background: var();">
+      <div class="h-full rounded-2xl shadow-md bg-[var(--card-bg)] border overflow-hidden" style="border-color: var(--border-color);">
+        <div class="relative overflow-hidden">
+          <img src="ntc.jpg" alt="Upper Secondary Education" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105">
+          <span class="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-semibold rounded-full text-white" style="background: var(--primary-bg);">
+            2020 – 2022
+          </span>
+        </div>
+        <div class="p-6 space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full" style="background: var(--primary-bg); color: white;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422A12.083 12.083 0 0112 21 12.083 12.083 0 015.84 10.578L12 14z"/></svg>
+            </span>
+            <h3 class="text-xl font-semibold" style="color: var(--text-primary);">National Teacher's College</h3>
+          </div>
+          <p class="text-sm" style="color: var(--text-secondary);">Upper Secondary Education</p>
+          <p class="text-sm" style="color: var(--text-tertiary);">Accountancy, Business, and Management</p>
+          <div class="flex flex-wrap gap-2 pt-1">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold text-white" style="background: var(--primary-bg);">Graduated With High Honors</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="group relative p-[1px] rounded-2xl transition-transform duration-300 hover:-translate-y-1" data-aos="fade-left" style="background: var();">
+      <div class="h-full rounded-2xl shadow-md bg-[var(--card-bg)] border overflow-hidden" style="border-color: var(--border-color);">
+        <div class="relative overflow-hidden">
+          <img src="ue.jpg" alt="Computer Engineering" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105">
+          <span class="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-semibold rounded-full text-white" style="background: var(--primary-bg);">
+            2023 – Present
+          </span>
+        </div>
+        <div class="p-6 space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full" style="background: var(--primary-bg); color: white;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422A12.083 12.083 0 0112 21 12.083 12.083 0 015.84 10.578L12 14z"/></svg>
+            </span>
+            <h3 class="text-xl font-semibold" style="color: var(--text-primary);">University of the East - Manila</h3>
+          </div>
+          <p class="text-sm" style="color: var(--text-secondary);">Tertiary Education</p>
+          <p class="text-sm" style="color: var(--text-tertiary);">BS in Computer Engineering</p>
+          <div class="flex flex-wrap gap-2 pt-1">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold" style="background: var(--bg-primary); color: var(--primary-text); border: 1px solid var(--primary-border);">Currently Enrolled</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Seminars and Trainings Section-->
+<section id="seminars" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto fade-in-section">
+  <h2 class="text-4xl md:text-5xl font-extrabold text-center" style="color: var(--text-primary);">
+    Seminars and Trainings
+  </h2>
+  <div class="edu-accent mb-4"></div>
+
+  <p class="text-center max-w-2xl mx-auto mb-12 text-sm md:text-base" style="color: var(--text-secondary);">
+    Participated on computer engineering topics, enhancing skills in hardware, software, and emerging technologies.  </p>
+
+  <div class="steps mx-auto mt-10">
+    <div class="step mb-4" data-aos="fade-up-right">
+      <div class="step-card">
+        <div class="step-badge">1</div>
+        <h5 class="step-title">Circuit Crash: Exploring the Power of Arduino</h5>
+        <p class="step-text mb-0">A hands-on workshop designed to introduce students to the basics of Arduino, from understanding its components to building simple, interactive projects. Perfect for beginners eager to dive into the world of electronics and programming.</p>
+      </div>
+    </div>
+
+    <div class="step mb-4" data-aos="fade-up-left">
+      <div class="step-card">
+        <div class="step-badge">2</div>
+        <h5 class="step-title">CPE TechCon 2024. Going Beyond Revolutions: Shaping the Next Generation of Computer Engineers</h5>
+        <p class="step-text mb-0">A seminar that empowers future computer engineers with the skills, mindset, and innovation needed to drive technological advancements and create impactful solutions for tomorrow's world.</p>
+      </div>
+    </div>
+
+    <div class="step mb-4" data-aos="fade-up-right">
+      <div class="step-card">
+        <div class="step-badge">3</div>
+        <h5 class="step-title">The Developer's Cookbook: Git & GitHub</h5>
+        <p class="step-text mb-0">A practical workshop that equips developers with essential version control skills, from mastering Git commands to collaborating seamlessly on GitHub, enabling efficient and organized project development.</p>
+      </div>
+    </div>
+
+    <div class="step mb-4" data-aos="fade-up-left">
+      <div class="step-card">
+        <div class="step-badge">4</div>
+        <h5 class="step-title">Don't Just Code: Copilot Your Way to Success</h5>
+        <p class="step-text mb-0">Aim to explore how AI-powered tools like GitHub Copilot can boost productivity, enhance code quality, and transform the way developers approach problem-solving.</p>
+      </div>
+    </div>
+
+    <div class="step mb-4" data-aos="fade-up-right">
+      <div class="step-card">
+        <div class="step-badge">5</div>
+        <h5 class="step-title">Career Launchpad: Resume Writing for Emerging Computer Engineers</h5>
+        <p class="step-text mb-0">To aspire computer engineers in crafting impactful, industry-ready resumes that showcase their skills, projects, and potential to employers.</p>
+      </div>
+    </div>
+
+    <div class="step mb-4" data-aos="fade-up-left">
+      <div class="step-card">
+        <div class="step-badge">6</div>
+        <h5 class="step-title">Beyond Limits: Cultivating Growth for Success and Confidence</h5>
+        <p class="step-text mb-0">A motivational seminar designed to help individuals develop a growth mindset, build self-confidence, and unlock their full potential to achieve personal and professional success.</p>
+      </div>
+    </div>
+
+    <div class="step mb-4" data-aos="fade-up-right">
+      <div class="step-card">
+        <div class="step-badge">7</div>
+        <h5 class="step-title">Figma 101 Workshop</h5>
+        <p class="step-text mb-0">A beginner-friendly session that introduces the fundamentals of Figma, guiding participants through designing, prototyping, and collaborating on user interface projects with ease.</p>
+      </div>
+    </div>
+
+    <div class="step mb-4" data-aos="fade-up-left">
+      <div class="step-card">
+        <div class="step-badge">8</div>
+        <h5 class="step-title">Psychology of Gaming Addiction</h5>
+        <p class="step-text mb-0">An insightful seminar that explores the psychological factors behind gaming addiction, its impact on mental health and daily life, and strategies for achieving a healthy balance between gaming and well-being.</p>
+      </div>
+    </div>
+
+    <div class="step mb-0" data-aos="fade-up-right">
+      <div class="step-card">
+        <div class="step-badge">9</div>
+        <h5 class="step-title">Anti Cyberbullying Seminar</h5>
+        <p class="step-text mb-0">An educational seminar that raises awareness about the impact of cyberbullying, promotes digital empathy and responsible online behavior, and equips participants with strategies to prevent and address online harassment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Projects Section-->
+<section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto fade-in-section">
+  <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-4" style="color: var(--text-primary);">Featured Projects</h2>
+  <div class="edu-accent mb-4"></div>
+  <p class="text-center max-w-2xl mx-auto mb-12 text-sm md:text-base" style="color: var(--text-secondary);">
+    A showcase of my technical skills and creative problem-solving abilities through real-world projects.
+  </p>
+
+  <!-- Enhanced Ticker with better spacing and labels -->
+  <div class="ticker-container mb-12">
+    <div class="ticker-text">
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="python.png" alt="Python">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="javascript.png" alt="JavaScript">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="java.png" alt="Java">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="html.png" alt="HTML">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="bootstrap.png" alt="Bootstrap">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="sql.png" alt="SQL">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="microsoft.png" alt="Microsoft">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="python.png" alt="Python">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="javascript.png" alt="JavaScript">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="java.png" alt="Java">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="html.png" alt="HTML">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="bootstrap.png" alt="Bootstrap">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="sql.png" alt="SQL">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <img class="ticker-img" src="microsoft.png" alt="Microsoft">
+        <span class="text-xs font-medium" style="color: var(--text-secondary);"></span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Enhanced Project Cards Grid -->
+  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <!-- Project 1: Ten Seconds Game -->
+    <article class="group relative overflow-hidden rounded-2xl shadow-xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-2" data-aos="flip-left" style="background: var(--card-bg); border-color: var(--border-color);">
+      <div class="relative overflow-hidden">
+        <img src="10secs title.png" alt="Student Management System" class="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-300 group-hover:opacity-100 opacity-0"></div>
+        
+        <!-- Project Status Badge -->
+        <div class="absolute top-4 left-4">
+          <span class="px-3 py-1 text-xs font-semibold rounded-full text-white backdrop-blur-sm" style="background: var(--primary-bg);">
+            Completed
+          </span>
+        </div>
+        
+        <!-- Tech Stack Badges -->
+        <div class="absolute top-4 right-4 flex gap-2">
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-text);">Python</span>
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-bg);">Tkinter</span>
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-text);">PyCharm</span>
+        </div>
+      </div>
+
+      <!-- Project Info -->
+      <div class="p-6">
+        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Ten Seconds Game</h3>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          A Python application developed using the Tkinter library, featuring a GUI-based timer challenge where users attempt to stop the timer precisely at the 10-second mark.
+        </p>
+        
+        <!-- Key Features -->
+        <div class="mb-4">
+          <h4 class="text-sm font-semibold mb-2" style="color: var(--text-primary);">Key Features:</h4>
+          <ul class="text-xs space-y-1" style="color: var(--text-tertiary);">
+            <li>• Nintendo Switch-Inspired Interface</li>
+            <li>• Interactive Game Controls</li>
+            <li>• Precision Timing Mechanism</li>
+            <li>• Replayability</li>
+            <li>• User-Friendly GUI</li>
+            <li>• Sound Integration</li>
+
+          </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-3">
+          <button onclick="openModal('project1')" 
+                  class="flex-1 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg" style="background: var(--primary-gradient);">
+            View Details
+          </button>
+          <a href="#" target="_blank" class="px-4 py-2 border rounded-lg text-sm font-medium transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-800" style="border-color: var(--border-color); color: var(--text-primary);">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 2: HI-LO Game -->
+    <article class="group relative overflow-hidden rounded-2xl shadow-xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-2" data-aos="flip-left" style="background: var(--card-bg); border-color: var(--border-color);">
+      <div class="relative overflow-hidden">
+        <img src="hilo title.jpg"E-commerce Website" class="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-300 group-hover:opacity-100 opacity-0"></div>
+        
+        <div class="absolute top-4 left-4">
+          <span class="px-3 py-1 text-xs font-semibold rounded-full text-white backdrop-blur-sm" style="background: var(--primary-bg);">
+            Completed
+          </span>
+        </div>
+        
+        <!-- Tech Stack Badges -->
+        <div class="absolute top-4 right-4 flex gap-2">
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-text);">Java</span>
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-bg);">Kotlin</span>
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-text);">Android Studio</span>
+        </div>
+      </div>
+
+
+      <div class="p-6">
+        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">HI - LO Game</h3>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          A simple Android mobile application developed using Kotlin and Java, where users guess whether the next randomly generated number will be higher or lower than the current one.
+        </p>
+        
+        <div class="mb-4">
+          <h4 class="text-sm font-semibold mb-2" style="color: var(--text-primary);">Key Features:</h4>
+          <ul class="text-xs space-y-1" style="color: var(--text-tertiary);">
+            <li>• Android App</li>
+            <li>• Simple Gameplay Mechanics</li>
+            <li>• Score Tracking</li>
+            <li>• Replayability</li>
+            <li>• User-Friendly Interface</li>
+            <li>• Lightweight App</li>
+          </ul>
+        </div>
+
+        <div class="flex gap-3">
+          <button onclick="openModal('project2')" 
+                  class="flex-1 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg" style="background: var(--primary-gradient);">
+            View Details
+          </button>
+          <a href="#" target="_blank" class="px-4 py-2 border rounded-lg text-sm font-medium transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-800" style="border-color: var(--border-color); color: var(--text-primary);">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 3: This Is Me App-->
+    <article class="group relative overflow-hidden rounded-2xl shadow-xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-2" data-aos="flip-left" style="background: var(--card-bg); border-color: var(--border-color);">
+      <div class="relative overflow-hidden">
+        <img src="this is me title.png" alt="Task Management App" class="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-300 group-hover:opacity-100 opacity-0"></div>
+        
+        <div class="absolute top-4 left-4">
+          <span class="px-3 py-1 text-xs font-semibold rounded-full text-white backdrop-blur-sm" style="background: var(--primary-bg);">
+            Completed
+          </span>
+        </div>
+        
+        <div class="absolute top-4 right-4 flex gap-2">
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-bg);">Visual Studio Code</span>
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-text);">Kotlin</span>
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-text);">Java</span>
+        </div>
+      </div>
+
+      <div class="p-6">
+        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">This Is Me</h3>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          A personal mobile app that serves as an interactive self-introduction, showcasing my background, skills, interests, and story through a creative and user-friendly interface. Built to reflect both technical skills and personal flair.
+        </p>
+        
+        <div class="mb-4">
+          <h4 class="text-sm font-semibold mb-2" style="color: var(--text-primary);">Key Features:</h4>
+          <ul class="text-xs space-y-1" style="color: var(--text-tertiary);">
+            <li>• Profile Overview</li>
+            <li>• Custom UI/UX Design</li>
+            <li>• Skills Showcase</li>
+            <li>• Timeline / Journey</li>
+            <li>• Social Media Integration  </li>
+            <li>• Spotify Playlist Embed</li>
+          </ul>
+        </div>
+
+        <div class="flex gap-3">
+          <button onclick="openModal('project3')" 
+                  class="flex-1 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg" style="background: var(--primary-gradient);">
+            View Details
+          </button>
+          <a href="#" target="_blank" class="px-4 py-2 border rounded-lg text-sm font-medium transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-800" style="border-color: var(--border-color); color: var(--text-primary);">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 4: Game Factory - A Multi-Game App-->
+    <article class="group relative overflow-hidden rounded-2xl shadow-xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-2" data-aos="flip-left" style="background: var(--card-bg); border-color: var(--border-color);">
+      <div class="relative overflow-hidden">
+        <img src="mult game 2 title.jpg" alt="Weather Dashboard" class="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-300 group-hover:opacity-100 opacity-0"></div>
+        
+        <div class="absolute top-4 left-4">
+          <span class="px-3 py-1 text-xs font-semibold rounded-full text-white backdrop-blur-sm" style="background: var(--primary-bg);">
+            Completed
+          </span>
+        </div>
+        
+        <div class="absolute top-4 right-4 flex gap-2">
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-bg);">Visual Studio Code</span>
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-text);">Kotlin</span>
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-text);">Java</span>
+        </div>
+      </div>
+
+      <div class="p-6">
+        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Game Factory - A Multi-Game App</h3>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          An Android app featuring multiple classic games, including HI-LO, In-Between, and Tic Tac Toe. Developed to demonstrate modular design, clean UI, and engaging gameplay experiences within a single application.
+        </p>
+        
+        <div class="mb-4">
+          <h4 class="text-sm font-semibold mb-2" style="color: var(--text-primary);">Key Features:</h4>
+          <ul class="text-xs space-y-1" style="color: var(--text-tertiary);">
+            <li>• Multi-Game Integration</li>
+            <li>• User-Friendly Interface</li>
+            <li>• Modular Code Architecture</li>
+            <li>• Score Tracking</li>
+            <li>• Single-Player Mode</li>
+            <li>• Lightweight & Fast</li>
+          </ul>
+        </div>
+
+        <div class="flex gap-3">
+          <button onclick="openModal('project4')" 
+                  class="flex-1 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg" style="background: var(--primary-gradient);">
+            View Details
+          </button>
+          <a href="#" target="_blank" class="px-4 py-2 border rounded-lg text-sm font-medium transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-800" style="border-color: var(--border-color); color: var(--text-primary);">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 5: Guessing Game -->
+    <article class="group relative overflow-hidden rounded-2xl shadow-xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-2" data-aos="flip-left" style="background: var(--card-bg); border-color: var(--border-color);">
+      <div class="relative overflow-hidden">
+        <img src="guessing game 1 title.jpg" alt="Portfolio Website" class="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-300 group-hover:opacity-100 opacity-0"></div>
+        
+        <div class="absolute top-4 left-4">
+          <span class="px-3 py-1 text-xs font-semibold rounded-full text-white backdrop-blur-sm" style="background: var(--primary-bg);">
+            Live
+          </span>
+        </div>
+        
+        <div class="absolute top-4 right-4 flex gap-2">
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-text);">PyCharm</span>
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-bg);">Tkinter</span>
+          <span class="px-2 py-1 text-xs font-medium rounded-full text-white backdrop-blur-sm" style="background: var(--primary-text);">Python</span>
+        </div>
+      </div>
+
+      <div class="p-6">
+        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Guessing Game</h3>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          A simple number guessing game developed using Python and Tkinter. This interactive GUI-based game challenges users to guess a randomly generated number within a set range, providing instant feedback and a fun user experience.
+        </p>
+        
+        <div class="mb-4">
+          <h4 class="text-sm font-semibold mb-2" style="color: var(--text-primary);">Key Features:</h4>
+          <ul class="text-xs space-y-1" style="color: var(--text-tertiary);">
+            <li>• Random Number Generation</li>
+            <li>• Input Validation</li>
+            <li>• Replay Option</li>
+            <li>• Lightweight & Standalone</li>
+            <li>• Cash Prize System</li>
+            <li>• Feedback Messages</li>
+          </ul>
+        </div>
+
+        <div class="flex gap-3">
+          <button onclick="openModal('project5')" 
+                  class="flex-1 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg" style="background: var(--primary-gradient);">
+            View Details
+          </button>
+          <a href="#" target="_blank" class="px-4 py-2 border rounded-lg text-sm font-medium transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-800" style="border-color: var(--border-color); color: var(--text-primary);">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+
+  </div>
+
+  <!-- Call to Action -->
+  <div class="text-center mt-16">
+    <p class="text-lg mb-6" style="color: var(--text-secondary);">
+      Interested in working together? Let's discuss your project!
+    </p>
+    <button onclick="scrollToSection('contact')" 
+            class="text-white px-8 py-3 rounded-lg text-lg font-semibold transition-all duration-300 hover:shadow-xl hover:scale-105" 
+            style="background: var(--primary-gradient);">
+      Get In Touch
+    </button>
+  </div>
+</section>
+
+<!-- Project 1 Modal: Ten Seconds Game -->
+<div id="project1-modal" class="modal project-modal landscape">
+  <div class="modal-content dialog">
+    <div class="head">
+      <h3 class="text-lg font-semibold">Ten Seconds Game</h3>
+      <button class="close-x" onclick="closeModal('project1')">×</button>
+    </div>
+    <div class="body" style="flex-direction: column !important;">
+      <div class="pmodal-frame">
+        <div class="pmodal-slider" data-index="0" data-images='["10secs 1.png","10secs 2.png","10secs 3.png", "10secs 4.png"]'>
+          <img src="10secs 1.png" alt="Ten Seconds Game Screenshot">
+        </div>
+        <div class="pmodal-nav">
+          <button class="pmodal-btn" data-prev aria-label="Previous">‹</button>
+          <button class="pmodal-btn" data-next aria-label="Next">›</button>
+        </div>
+      </div>
+      <div class="pmodal-content">
+        <p class="pmodal-description">A fun timing-based game built with Python and Tkinter. Test your reflexes and see if you can stop the timer at exactly 10 seconds!</p>
+        <div class="pmodal-badges">
+          <span class="badge">Python</span><span class="badge">Tkinter</span>
+        </div>
+        <div class="pmodal-meta">
+          <span>Development Year: December 2023</span>
+          <span>Status: Completed</span>
+          <span>Type: Desktop Application</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Project 2 Modal: HI-LO Game -->
+<div id="project2-modal" class="modal project-modal portrait">
+  <div class="modal-content dialog">
+    <div class="head">
+      <h3 class="text-lg font-semibold">HI-LO Game</h3>
+      <button class="close-x hover:bg-white/10" onclick="closeModal('project2')">×</button>
+    </div>
+    <div class="body">
+      <div class="pmodal-frame">
+        <div class="pmodal-slider" data-index="0" data-images='["hi1.jpg", "hi2.jpg", "hi3.jpg", "hi4.jpg", "hi5.jpg"]'>
+          <img src="hi1.jpg" alt="HI-LO Game Screenshot">
+        </div>
+        <div class="pmodal-nav">
+          <button class="pmodal-btn" data-prev>‹</button>
+          <button class="pmodal-btn" data-next>›</button>
+        </div>
+      </div>
+      <div>
+        <p class="text-sm" style="color: var(--text-secondary);">
+          A simple guessing game where players try to determine whether the next number, card, or item will be higher or lower than the current one. Scores are earned for each correct guess.        </p>
+        <div class="badges mt-3">
+          <span class="badge">Java</span><span class="badge">Kotlin</span>
+        </div>
+        <div class="meta">
+          <span>Development Year: December 2024</span>
+          <span>Status: Completed</span>
+          <span>Type: Android Application</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Project 3 Modal: This Is Me App -->
+<div id="project3-modal" class="modal project-modal portrait">
+  <div class="modal-content dialog">
+    <div class="head">
+      <h3 class="text-lg font-semibold">This Is Me App</h3>
+      <button class="close-x hover:bg-white/10" onclick="closeModal('project3')">×</button>
+    </div>
+    <div class="body">
+      <div class="pmodal-frame">
+        <div class="pmodal-slider" data-index="0" data-images='["this is me 1.png","this is me 2.png","this is me 3.png","this is me 4.png","this is me 5.png","this is me 6.png","this is me 7.png"]'>
+          <img src="this is me 1.png" alt="This Is Me App Screenshot">
+        </div>
+        <div class="pmodal-nav">
+          <button class="pmodal-btn" data-prev>‹</button>
+          <button class="pmodal-btn" data-next>›</button>
+        </div>
+      </div>
+      <div class="pmodal-content">
+        <p class="pmodal-description">
+          A personal portfolio and introduction app showcasing individual skills, experiences, and achievements. Features interactive elements.
+        </p>
+        <div class="pmodal-badges">
+          <span class="badge">Java</span><span class="badge">Kotlin</span>
+        </div>
+        <div class="pmodal-meta">
+          <span>Development Year: November 2024</span>
+          <span>Status: Completed</span>
+          <span>Type: Personal Mobile Application</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Project 4 Modal: Game Factory - A Multi-Game App-->
+<div id="project4-modal" class="modal project-modal portrait">
+  <div class="modal-content dialog">
+    <div class="head">
+      <h3 class="text-lg font-semibold">Game Factory - A Multi-Game App</h3>
+      <button class="close-x hover:bg-white/10" onclick="closeModal('project4')">×</button>
+    </div>
+    <div class="body">
+      <div class="pmodal-frame">
+        <div class="pmodal-slider" data-index="0" data-images='["mult game 1.jpg", "mult game 2.jpg", "mult game 3.jpg", "mult game 4.jpg", "mult game 5.jpg", "mult game 6.jpg", "mult game 7.jpg", "mult game 8.jpg", "mult game 9.jpg", "mult game 10.jpg", "mult game 11.jpg"]'>
+          <img src="mult game 1.jpg" alt="Game Factory Multi-Game App Screenshot">
+        </div>
+        <div class="pmodal-nav">
+          <button class="pmodal-btn" data-prev>‹</button>
+          <button class="pmodal-btn" data-next>›</button>
+        </div>
+      </div>
+      <div>
+        <p class="text-sm" style="color: var(--text-secondary);">
+          A fun-packed multi-game android app featuring three classic games in one. With Hi-Lo, In-Between, and Tic Tac Toe, whether you’re feeling strategic or just want quick fun, there’s something for everyone in this all-in-one game collection!        </p>
+        <div class="badges mt-3">
+          <span class="badge">Kotlin</span><span class="badge">Java</span>
+        </div>
+        <div class="meta">
+          <span>Development Year: 2024</span>
+          <span>Status: Completed</span>
+          <span>Type: Android Application</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Project 5 Modal: Guessing Game -->
+<div id="project5-modal" class="modal project-modal landscape">
+  <div class="modal-content dialog">
+    <div class="head">
+      <h3 class="text-lg font-semibold">Guessing Game</h3>
+      <button class="close-x hover:bg-white/10" onclick="closeModal('project5')">×</button>
+    </div>
+    <div class="body" style="flex-direction: column !important;">
+      <div class="pmodal-frame">
+        <div class="pmodal-slider" data-index="0" data-images='["guessing game 1.jpg","guessing game 2.jpg","guessing game 3.jpg","guessing game 4.jpg","guessing game 5.jpg"]'>
+          <img src="guessing game 1.jpg" alt="Guessing Game Screenshot">
+        </div>
+        <div class="pmodal-nav">
+          <button class="pmodal-btn" data-prev>‹</button>
+          <button class="pmodal-btn" data-next>›</button>
+        </div>
+      </div>
+      <div class="pmodal-content">
+        <p class="pmodal-description">
+          An interactive number guessing game with multiple difficulty levels. Features hint system, score tracking, and engaging gameplay mechanics.
+        </p>
+        <div class="pmodal-badges">
+          <span class="badge">HTML5</span><span class="badge">CSS3</span><span class="badge">JavaScript</span><span class="badge">Game Logic</span>
+        </div>
+        <div class="pmodal-meta">
+          <span>Development Year: 2024</span>
+          <span>Status: Completed</span>
+          <span>Type: Web Game</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Experience Section -->
+    <section id="experience" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto fade-in-section">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-4" style="color: var(--text-primary);">Professional Experience</h2>
+        <div class="edu-accent mb-4"></div>
+        <p class="text-center max-w-2xl mx-auto mb-12 text-sm md:text-base" style="color: var(--text-secondary);">
+            A journey of growth, learning, and professional development.
+        </p>
+        
+        <div class="accordion" id="experienceAccordion">
+
+
+            <!-- UE Automation, Robotics, and Mechatronics Society -->
+            <div class="accordion-item mb-4" data-aos="zoom-in" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); overflow: hidden; transition: all 0.3s ease;">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="background: linear-gradient(135deg, var(--primary-bg), var(--primary-text)); color: white; border: none; font-weight: 600; font-size: 1.1rem; position: relative; overflow: hidden; padding: 25px 30px;">
+                        <div class="experience-header" style="position: relative; z-index: 1; width: 100%;">
+                            <div class="experience-title" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 5px;">UE Automation, Robotics, and Mechatronics Society</div>
+                            <div class="experience-company" style="font-size: 1rem; opacity: 0.9; margin-bottom: 5px;">Vice President for External</div>
+                            <div class="experience-duration" style="font-size: 0.9rem; opacity: 0.8;">
+                                <i class="fas fa-calendar-alt me-2"></i>2025 - Present
+                            </div>
+                        </div>
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#experienceAccordion">
+                    <div class="accordion-body" style="background: var(--card-bg); color: var(--text-primary); padding: 30px;">
+                        <p class="experience-description" style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 25px; font-size: 1rem;">
+                            The University of The East Automation Robotics Mechatronics Society (UE ARMS) is a student organization focused on advancing knowledge and skills in automation, robotics, and mechatronics. UE ARMS provides a platform for students to engage in hands-on projects, workshops. and competitions, fostering innovation and technical expertise.                        </p>
+                        <div class="achievements-section" style="margin-bottom: 25px;">
+                            <h5 class="achievements-title" style="font-weight: 600; color: var(--text-primary); margin-bottom: 12px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Key Roles & Achievements</h5>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Vice President for External (2025 - Present)</span>
+                            </div>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Member (2023 - 2025)</span>
+                            </div>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Manage external partnerships and collaborations</span>
+                            </div>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Organize industry networking events and workshops</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UE Society of Computer Engineering Students -->
+            <div class="accordion-item mb-4" data-aos="zoom-in" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); overflow: hidden; transition: all 0.3s ease;">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="background: linear-gradient(135deg, var(--primary-bg), var(--primary-text)); color: white; border: none; font-weight: 600; font-size: 1.1rem; position: relative; overflow: hidden; padding: 25px 30px;">
+                        <div class="experience-header" style="position: relative; z-index: 1; width: 100%;">
+                            <div class="experience-title" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 5px;">UE Society of Computer Engineering Students</div>
+                            <div class="experience-company" style="font-size: 1rem; opacity: 0.9; margin-bottom: 5px;">Member</div>
+                            <div class="experience-duration" style="font-size: 0.9rem; opacity: 0.8;">
+                                <i class="fas fa-calendar-alt me-2"></i>2023 - Present
+                            </div>
+                        </div>
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#experienceAccordion">
+                    <div class="accordion-body" style="background: var(--card-bg); color: var(--text-primary); padding: 30px;">
+                        <p class="experience-description" style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 25px; font-size: 1rem;">
+                            The University of The East Society of Computer Engineering Students (UE SCpES) is a student organization dedicated to fostering academic excellence, professional growth, and community engagement among computer engineering students at the University of The East.                        </p>
+                        <div class="achievements-section" style="margin-bottom: 25px;">
+                            <h5 class="achievements-title" style="font-weight: 600; color: var(--text-primary); margin-bottom: 12px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Key Activities</h5>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Participated in technical workshops and seminars</span>
+                            </div>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Attended networking events with industry professionals</span>
+                            </div>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Contributed to society events and initiatives</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UE College of Engineering -->
+            <div class="accordion-item mb-4" data-aos="zoom-in" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); overflow: hidden; transition: all 0.3s ease;">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="background: linear-gradient(135deg, var(--primary-bg), var(--primary-text)); color: white; border: none; font-weight: 600; font-size: 1.1rem; position: relative; overflow: hidden; padding: 25px 30px;">
+                        <div class="experience-header" style="position: relative; z-index: 1; width: 100%;">
+                            <div class="experience-title" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 5px;">UE College of Engineering</div>
+                            <div class="experience-company" style="font-size: 1rem; opacity: 0.9; margin-bottom: 5px;">College Ambassador</div>
+                            <div class="experience-duration" style="font-size: 0.9rem; opacity: 0.8;">
+                                <i class="fas fa-calendar-alt me-2"></i>2024 - Present
+                            </div>
+                        </div>
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#experienceAccordion">
+                    <div class="accordion-body" style="background: var(--card-bg); color: var(--text-primary); padding: 30px;">
+                        <p class="experience-description" style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 25px; font-size: 1rem;">
+                            The University of the East College of Engineering provides students with strong technical foundations, hands-on training, and industry-aligned skills in areas such as civil, mechanical, electrical, and computer engineering. It prepares future engineers through quality instruction, laboratory work, innovation, and research aimed at solving real-world problems.                        </p>
+                        <div class="achievements-section" style="margin-bottom: 25px;">
+                            <h5 class="achievements-title" style="font-weight: 600; color: var(--text-primary); margin-bottom: 12px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Key Responsibilities</h5>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Represent the college</span>
+                            </div>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Promote engineering programs and opportunities</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UE College of Engineering Student Council -->
+            <div class="accordion-item mb-4" data-aos="zoom-in" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); overflow: hidden; transition: all 0.3s ease;">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive" style="background: linear-gradient(135deg, var(--primary-bg), var(--primary-text)); color: white; border: none; font-weight: 600; font-size: 1.1rem; position: relative; overflow: hidden; padding: 25px 30px;">
+                        <div class="experience-header" style="position: relative; z-index: 1; width: 100%;">
+                            <div class="experience-title" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 5px;">UE College of Engineering Student Council</div>
+                            <div class="experience-company" style="font-size: 1rem; opacity: 0.9; margin-bottom: 5px;">2nd Year Representative</div>
+                            <div class="experience-duration" style="font-size: 0.9rem; opacity: 0.8;">
+                                <i class="fas fa-calendar-alt me-2"></i>2024 - 2025
+                            </div>
+                        </div>
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#experienceAccordion">
+                    <div class="accordion-body" style="background: var(--card-bg); color: var(--text-primary); padding: 30px;">
+                        <p class="experience-description" style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 25px; font-size: 1rem;">
+                            Served as a representative for the student body in the College of Engineering, advocating for student interests and contributing to the development of academic and extracurricular programs.
+                        </p>
+                        <div class="achievements-section" style="margin-bottom: 25px;">
+                            <h5 class="achievements-title" style="font-weight: 600; color: var(--text-primary); margin-bottom: 12px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Key Roles</h5>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>2nd Year Representative (2024 - 2025)</span>
+                            </div>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Student advocacy and representation</span>
+                            </div>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Contributed to student council initiatives and programs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TTEC -->
+            <div class="accordion-item mb-4" data-aos="zoom-in" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); overflow: hidden; transition: all 0.3s ease;">
+                <h2 class="accordion-header" id="headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix" style="background: linear-gradient(135deg, var(--primary-bg), var(--primary-text)); color: white; border: none; font-weight: 600; font-size: 1.1rem; position: relative; overflow: hidden; padding: 25px 30px;">
+                        <div class="experience-header" style="position: relative; z-index: 1; width: 100%;">
+                            <div class="experience-title" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 5px;">TTEC</div>
+                            <div class="experience-company" style="font-size: 1rem; opacity: 0.9; margin-bottom: 5px;">Desktop Support Technician</div>
+                            <div class="experience-duration" style="font-size: 0.9rem; opacity: 0.8;">
+                                <i class="fas fa-calendar-alt me-2"></i>February 2022 - November 2022
+                            </div>
+                        </div>
+                    </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#experienceAccordion">
+                    <div class="accordion-body" style="background: var(--card-bg); color: var(--text-primary); padding: 30px;">
+                        <p class="experience-description" style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 25px; font-size: 1rem;">
+                            Provided technical support and troubleshooting for desktop systems and software applications. Managed customer inquiries and ensured timely resolution of technical issues through systematic problem classification and escalation procedures.
+                        </p>
+                        <div class="achievements-section" style="margin-bottom: 25px;">
+                            <h5 class="achievements-title" style="font-weight: 600; color: var(--text-primary); margin-bottom: 12px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Key Responsibilities</h5>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Determine and classify problems and issues systematically</span>
+                            </div>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Sort and save reported inquiries, then offer solutions</span>
+                            </div>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Track problems all the way through to resolution</span>
+                            </div>
+                            <div class="achievement-item" style="display: flex; align-items: flex-start; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary-bg); margin-right: 12px; margin-top: 2px; font-size: 0.8rem;"></i>
+                                <span>Escalate unsolved issues to higher level of assistance when needed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section id="awards" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto fade-in-section">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4" style="color: var(--text-primary);">
+                Awards & Certifications
+            </h2>
+            <div class="edu-accent mb-4"></div>
+            <p class="text-center max-w-2xl mx-auto text-sm md:text-base" style="color: var(--text-secondary);">
+                My recognition and achievements that showcase dedication to excellence and continuous learning, more specifically in the field of computer engineering.
+            </p>
+        </div>
+        
+        <div class="awards-container">
+            <!-- Featured Award -->
+            <div class="featured-award mb-12">
+                <div class="award-card featured" data-aos="flip-right" style="background: var(--card-bg); border: 1px solid var(--border-color);">
+                    <div class="award-badge">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="award-content">
+                        <div class="award-icon">  
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <h3>Champion</h3>
+                        <p class="award-issuer">Circuit Crash Competition: The Power of Arduino</p>
+                        <p class="award-description">University of the East - SCpES</p>
+                        <div class="collaborator-info" style="color: var(--text-secondary); font-size: 0.9rem; margin: 1rem 0; padding: 0.75rem; background: rgba(var(--primary-rgb, 244, 114, 182), 0.05); border-radius: 8px; border-left: 3px solid var(--primary-bg);">
+                            <i class="fas fa-users" style="margin-right: 0.5rem; color: var(--primary-bg);"></i>
+                            <strong>Team Members:</strong> Heart S., Angel R., and Micah R.
+                        </div>
+                        <div class="award-meta" style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                            <div class="award-date" style="display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-calendar" style="color: var(--primary-bg);"></i>
+                                February 27, 2024
+                            </div>
+                            <div class="award-type" style="display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-map-marker-alt" style="color: var(--primary-bg);"></i>
+                                UE LB Building
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Certifications Grid -->
+            <div class="certifications-grid">
+                <!-- Achievement Card -->
+                <div class="cert-card" data-aos="flip-right" style="background: var(--card-bg); border: 1px solid var(--border-color);">
+                    <div class="cert-header">
+                        <div class="cert-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="award-badge">
+                          <i class="fas fa-star"></i>
+                      </div>
+                    </div>
+                    <div class="cert-content">
+                        <h4>Third Place</h4>
+                        <p class="cert-issuer">First Engineering Quiz Bee: Minds Challenge</p>
+                        <p class="collaborator-info" style="color: var(--text-secondary); font-size: 0.9rem; margin: 0.5rem 0;">
+                            <i class="fas fa-users" style="margin-right: 0.5rem;"></i>
+                            Collaborators: Heart Santos & Ransen Mercado
+                        </p>
+                        <div class="cert-skills">
+                            <span>Team Competition</span>
+                        </div>
+                        <div class="cert-date">
+                            <i class="fas fa-calendar" style="margin-right: 0.5rem;"></i>
+                            April 23, 2025 • UE LB Building
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leadership Position Card -->
+                <div class="cert-card" data-aos="flip-right" style="background: var(--card-bg); border: 1px solid var(--border-color);">
+                    <div class="cert-header">
+                        <div class="cert-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="cert-badge">Certification</div>
+                    </div>
+                    <div class="cert-content">
+                        <h4>2nd Year Representative</h4>
+                        <p class="cert-issuer">UE Manila - College of Engineering Student Council</p>
+                        <div class="cert-skills">
+                            <span>Student Leadership</span>
+                        </div>
+                        <div class="cert-date">
+                            <i class="fas fa-calendar" style="margin-right: 0.5rem;"></i>
+                            2024 - 2025 • UE Student's Affairs Office
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Competition Participation Card -->
+                <div class="cert-card" data-aos="flip-right" style="background: var(--card-bg); border: 1px solid var(--border-color);">
+                    <div class="cert-header">
+                        <div class="cert-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="cert-badge">Certification</div>
+                    </div>
+                    <div class="cert-content">
+                        <h4>Participant</h4>
+                        <p class="cert-issuer">Tech Brawl: Where Bits Battle In The Computer Engineering Arena</p>
+                        <div class="cert-skills">
+                            <span>Computer Engineering</span>
+                        </div>
+                        <div class="cert-date">
+                            <i class="fas fa-calendar" style="margin-right: 0.5rem;"></i>
+                            Sept. 28, 2023 • UE LB Building
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Honor Card -->
+                <div class="cert-card" data-aos="flip-right" style="background: var(--card-bg); border: 1px solid var(--border-color);">
+                    <div class="cert-header">
+                        <div class="cert-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="award-badge">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    </div>
+                    <div class="cert-content">
+                        <h4>With High Honors</h4>
+                        <p class="cert-issuer">National Teacher's College - Senior High School</p>
+                        <div class="cert-skills">
+                            <span>Academic Excellence</span>
+                        </div>
+                        <div class="cert-date">
+                            <i class="fas fa-calendar" style="margin-right: 0.5rem;"></i>
+                            2020 - 2022 • NTC Theater
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto fade-in-section">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div class="space-y-8">
+                <!-- Let's Connect Card -->
+                <div class="availability-card" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-4" style="color: var(--text-primary);">
+                        Let's Connect
+                    </h2>
+                    <div class="edu-accent mb-4" style="margin-left: 0;"></div>
+                    <p class="max-w-2xl text-sm md:text-base" style="color: var(--text-secondary);">
+                        Ready to collaborate? Let's discuss your project, ideas, or opportunities. I'm always excited to work on meaningful projects.
+                    </p>
+                </div>
+            </div>
+            <!-- Contact Form -->
+            <div class="contact-form-card" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <div class="form-header mb-6">
+                    <h3 class="text-xl font-semibold mb-2" style="color: var(--text-primary);">Send a Message</h3>
+                    <p class="text-sm" style="color: var(--text-secondary);">I'll get back to you within 24 hours.</p>
+                </div>
+                
+                <form onsubmit="handleFormSubmit(event)" class="space-y-6">
+                    <div class="form-group">
+                        <label for="name" class="block text-sm font-semibold mb-3" style="color: var(--text-primary);">
+                            </i>Full Name
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder=""
+                            class="form-input w-full px-4 py-3 rounded-lg border-2 transition-all duration-300 focus:outline-none focus:ring-2"
+                            style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);"
+                            required
+                        />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="block text-sm font-semibold mb-3" style="color: var(--text-primary);">
+                            </i>Email Address
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="your.email@example.com"
+                            class="form-input w-full px-4 py-3 rounded-lg border-2 transition-all duration-300 focus:outline-none focus:ring-2"
+                            style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);"
+                            required
+                        />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject" class="block text-sm font-semibold mb-3" style="color: var(--text-primary);">
+                            </i>Subject
+                        </label>
+                        <select
+                            id="subject"
+                            name="subject"
+                            class="form-input w-full px-4 py-3 rounded-lg border-2 transition-all duration-300 focus:outline-none focus:ring-2"
+                            style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);"
+                            required
+                        >
+                            <option value="">Select a topic</option>
+                            <option value="internship">Internship Opportunity</option>
+                            <option value="project">Project Collaboration</option>
+                            <option value="freelance">Freelance Work</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="block text-sm font-semibold mb-3" style="color: var(--text-primary);">
+                            </i>Message
+                        </label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            placeholder=""
+                            rows="6"
+                            class="form-input w-full px-4 py-3 rounded-lg border-2 transition-all duration-300 focus:outline-none focus:ring-2 resize-vertical"
+                            style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);"
+                            required
+                        ></textarea>
+                    </div>
+                    
+                    <button
+                        type="submit"
+                        class="submit-btn w-full py-4 text-lg font-semibold rounded-lg text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-4"
+                        style="background: var(--primary-gradient);"
+                    >
+                        </i>Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="py-16" style="background: var(--card-bg); border-top: 1px solid var(--border-color);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <!-- Left: About & Social Links -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Marianne Deirra</h3>
+                    <p class="text-sm mb-6 max-w-md" style="color: var(--text-secondary);">
+                        An aspiring Computer Engineering passionate about creating innovative solutions and meaningful digital experiences.
+                    </p>
+                    
+                    <!-- Social Links -->
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="https://www.facebook.com/deirruhig" target="_blank" rel="noopener noreferrer" 
+                           class="social-link p-3 rounded-full transition-all duration-300 hover:scale-110" 
+                           style="background: rgba(var(--primary-rgb), 0.1); color: var(--primary-bg);">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/mdeirra/" target="_blank" rel="noopener noreferrer" 
+                           class="social-link p-3 rounded-full transition-all duration-300 hover:scale-110" 
+                           style="background: rgba(var(--primary-rgb), 0.1); color: var(--primary-bg);">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001z"/>
+                            </svg>
+                        </a>
+                        <a href="https://github.com/mdeirra" target="_blank" rel="noopener noreferrer" 
+                           class="social-link p-3 rounded-full transition-all duration-300 hover:scale-110" 
+                           style="background: rgba(var(--primary-rgb), 0.1); color: var(--primary-bg);">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/marianne-deirra-505832281/" target="_blank" rel="noopener noreferrer" 
+                           class="social-link p-3 rounded-full transition-all duration-300 hover:scale-110" 
+                           style="background: rgba(var(--primary-rgb), 0.1); color: var(--primary-bg);">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: Quick Contact -->
+                <div class="text-center md:text-right">
+                    <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">Let's Work Together!</h4>
+                    <p class="text-sm mb-4" style="color: var(--text-secondary);">
+                      Open for internships, part-time work, and exciting project collaborations.
+                    </p>
+                    <a href="mailto:tayhoponmarianne@gmail.com" 
+                       class="inline-flex items-center px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105" 
+                       style="background: var(--primary-gradient); color: white;">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav py-4" style="background: var(--bg-primary); border-top: 1px solid var(--border-color);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="items-center">
+                <!-- Copyright -->
+                <div class="text-center">
+                    <p class="text-xs" style="color: var(--text-tertiary);">
+                        © 2024 Copyright: Marianne Deirra Tayhopon
+                    </p>
+                </div>
+
+                
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Theme Toggle Functionality
+        let currentTheme = localStorage.getItem('theme') || 'light';
+        document.body.className = `theme-${currentTheme}`;
+        document.documentElement.classList.toggle('dark', currentTheme === 'dark'); // For Tailwind's dark mode class
+        
+
+        function updateThemeIcon() {
+            const themeIcon = document.getElementById('theme-icon');
+            const mobileThemeIcon = document.getElementById('mobile-theme-icon');
+            const lightIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>`;
+            const darkIcon = `<circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>`;
+            if (themeIcon) themeIcon.innerHTML = currentTheme === 'light' ? lightIcon : darkIcon;
+            if (mobileThemeIcon) mobileThemeIcon.innerHTML = currentTheme === 'light' ? lightIcon : darkIcon;
+        }
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.className = `theme-${currentTheme}`;
+            document.documentElement.classList.toggle('dark', currentTheme === 'dark');
+            localStorage.setItem('theme', currentTheme);
+            updateThemeIcon();
+        }
+
+        // Scroll to section functionality
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const navHeight = 64;
+                const elementPosition = element.offsetTop - navHeight;
+                window.scrollTo({
+                    top: elementPosition,
+                    behavior: 'smooth'
+                });
+            }
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+            const currentTimeSpan = document.getElementById('current-time');
+            if (currentTimeSpan) {
+                currentTimeSpan.textContent = timeString;
+            }
+        }
+
+        // Navbar scroll effect
+        function handleNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            const navContainer = document.getElementById('nav-container');
+            const navContent = document.getElementById('nav-content');
+
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-[var(--nav-bg)]', 'backdrop-blur-md', 'shadow-lg');
+                navbar.classList.remove('bg-transparent');
+                navContainer.classList.remove('max-w-6xl');
+                navContainer.classList.add('max-w-full');
+                navContent.classList.remove('px-8', 'mx-4', 'rounded-2xl', 'backdrop-blur-md', 'shadow-lg', 'border');
+                navContent.classList.add('px-4', 'rounded-none', 'border-b');
+                navContent.style.background = 'transparent'; // Managed by navbar parent
+                navContent.style.borderColor = 'var(--border-color)'; // Still need border color
+            } else {
+                navbar.classList.remove('bg-[var(--nav-bg)]', 'backdrop-blur-md', 'shadow-lg');
+                navbar.classList.add('bg-transparent');
+                navContainer.classList.add('max-w-6xl');
+                navContainer.classList.remove('max-w-full');
+                navContent.classList.add('px-8', 'mx-4', 'rounded-2xl', 'backdrop-blur-md', 'shadow-lg', 'border');
+                navContent.classList.remove('px-4', 'rounded-none', 'border-b');
+                navContent.style.background = 'var(--nav-bg)';
+                navContent.style.borderColor = 'var(--border-color)';
+            }
+        }
+
+        // Initialize carousel when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const carouselTrack = document.getElementById('hero-carousel-track');
+            const carouselItems = document.querySelectorAll('#hero-carousel-track .carousel-item');
+            let currentIndex = 0;
+            const totalItems = carouselItems.length;
+
+            console.log('Carousel initialized:', { totalItems, carouselTrack, carouselItems });
+
+            function updateCarousel() {
+                const offset = -currentIndex * 33.333; // Use 33.333% for 3 items
+                carouselTrack.style.transform = `translateX(${offset}%)`;
+                console.log('Carousel updated:', { currentIndex, offset });
+            }
+
+            function moveCarousel(direction) {
+                currentIndex += direction;
+                if (currentIndex < 0) {
+                    currentIndex = totalItems - 1; // Loop to end
+                } else if (currentIndex >= totalItems) {
+                    currentIndex = 0; // Loop to start
+                }
+                updateCarousel();
+            }
+
+            // Make moveCarousel available globally
+            window.moveCarousel = moveCarousel;
+
+            // Auto-advance disabled per user request
+            // setInterval(() => {
+            //     moveCarousel(1);
+            // }, 4000);
+
+            // Initial update
+            updateCarousel();
+        });
+
+
+        // Fade-in-on-scroll functionality
+        const fadeInSections = document.querySelectorAll('.fade-in-section');
+        const observerOptions = {
+            root: null, // viewport
+            rootMargin: '0px',
+            threshold: 0.1 // 10% of the section must be visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Stop observing once visible
+                }
+            });
+        }, observerOptions);
+
+        fadeInSections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Modal functionality
+        function openModal(projectId) {
+            document.getElementById(`${projectId}-modal`).style.display = 'block';
+        }
+
+        function closeModal(projectId) {
+            document.getElementById(`${projectId}-modal`).style.display = 'none';
+        }
+
+        // Close modal if user clicks outside of it
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Accordion functionality
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const svg = button.querySelector('svg');
+
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                content.style.maxHeight = '0';
+                button.classList.remove('open');
+            } else {
+                // Close all other open accordions
+                document.querySelectorAll('.accordion-content.open').forEach(openContent => {
+                    openContent.classList.remove('open');
+                    openContent.style.maxHeight = '0';
+                    openContent.previousElementSibling.classList.remove('open');
+                });
+
+                content.classList.add('open');
+                content.style.maxHeight = content.scrollHeight + 'px'; // Set max-height to content height
+                button.classList.add('open');
+            }
+        }
+
+        // FAQ functionality
+        function toggleFAQ(button) {
+            const faqItem = button.closest('.faq-item');
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = button.querySelector('.faq-icon');
+            const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+
+            if (isOpen) {
+                // Close FAQ
+                answer.style.maxHeight = '0px';
+                icon.style.transform = 'rotate(0deg)';
+                button.classList.remove('active');
+            } else {
+                // Close all other FAQs first
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    const otherAnswer = item.querySelector('.faq-answer');
+                    const otherIcon = item.querySelector('.faq-icon');
+                    const otherButton = item.querySelector('.faq-question');
+                    otherAnswer.style.maxHeight = '0px';
+                    otherIcon.style.transform = 'rotate(0deg)';
+                    otherButton.classList.remove('active');
+                });
+
+                // Open current FAQ
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                icon.style.transform = 'rotate(180deg)';
+                button.classList.add('active');
+            }
+        }
+
+        // Contact form submission handler
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const submitBtn = form.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission (replace with actual form handling)
+            setTimeout(() => {
+                // Show success message
+                submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Message Sent!';
+                submitBtn.style.background = '#10b981';
+                
+                // Reset form after delay
+                setTimeout(() => {
+                    form.reset();
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.style.background = 'var(--primary-gradient)';
+                    submitBtn.disabled = false;
+                    
+                    // Show confirmation alert
+                    alert('Thank you for your message! I\'ll get back to you within 24 hours.');
+                }, 2000);
+            }, 1500);
+        }
+
+  // Single-open, animated accordion for Education
+  const eduItems = Array.from(document.querySelectorAll('#educational-background [data-edu]'));
+  function eduClose(item){ const t=item.querySelector('.edu-trigger'), p=item.querySelector('.edu-panel'); t.setAttribute('aria-expanded','false'); item.removeAttribute('aria-current'); p.style.maxHeight = 0; }
+  function eduOpen(item){ const t=item.querySelector('.edu-trigger'), p=item.querySelector('.edu-panel'); t.setAttribute('aria-expanded','true'); item.setAttribute('aria-current','true'); p.style.maxHeight = p.scrollHeight + 'px'; }
+  function eduToggle(item){ const open = item.querySelector('.edu-trigger').getAttribute('aria-expanded')==='true'; eduItems.forEach(i=>i!==item&&eduClose(i)); open?eduClose(item):eduOpen(item); }
+  eduItems.forEach((item, i) => {
+    const t=item.querySelector('.edu-trigger'), p=item.querySelector('.edu-panel'); p.style.maxHeight=0;
+    t.addEventListener('click',()=>eduToggle(item));
+    t.addEventListener('keydown',e=>{
+      const idx=eduItems.indexOf(item);
+      if(e.key==='ArrowDown'){e.preventDefault(); eduItems[(idx+1)%eduItems.length].querySelector('.edu-trigger').focus();}
+      if(e.key==='ArrowUp'){e.preventDefault(); eduItems[(idx-1+eduItems.length)%eduItems.length].querySelector('.edu-trigger').focus();}
+      if(e.key==='Enter'||e.key===' '){e.preventDefault(); eduToggle(item);}
+    });
+    if(i===0) requestAnimationFrame(()=>eduOpen(item));
+  });
+  window.addEventListener('resize',()=>{const cur=document.querySelector('#educational-background .edu-item[aria-current="true"] .edu-panel'); if(cur){cur.style.maxHeight=cur.scrollHeight+'px';}});
+  (() => {
+  const items = Array.from(document.querySelectorAll('#seminars [data-edu]'));
+  if (!items.length) return;
+
+  const close = (item) => {
+    const t = item.querySelector('.edu-trigger');
+    const p = item.querySelector('.edu-panel');
+    t.setAttribute('aria-expanded','false');
+    item.removeAttribute('aria-current');
+    p.style.maxHeight = 0;
+  };
+  const open = (item) => {
+    const t = item.querySelector('.edu-trigger');
+    const p = item.querySelector('.edu-panel');
+    t.setAttribute('aria-expanded','true');
+    item.setAttribute('aria-current','true');
+    p.style.maxHeight = p.scrollHeight + 'px';
+  };
+  const toggle = (item) => {
+    const isOpen = item.querySelector('.edu-trigger').getAttribute('aria-expanded') === 'true';
+    items.forEach(i => i !== item && close(i));
+    isOpen ? close(item) : open(item);
+  };
+
+  items.forEach((item, i) => {
+    const t = item.querySelector('.edu-trigger');
+    const p = item.querySelector('.edu-panel');
+    p.style.maxHeight = 0;
+
+    t.addEventListener('click', () => toggle(item));
+    t.addEventListener('keydown', (e) => {
+      const idx = items.indexOf(item);
+      if (e.key === 'ArrowDown') { e.preventDefault(); items[(idx + 1) % items.length].querySelector('.edu-trigger').focus(); }
+      if (e.key === 'ArrowUp')   { e.preventDefault(); items[(idx - 1 + items.length) % items.length].querySelector('.edu-trigger').focus(); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(item); }
+    });
+
+    if (i === 0) requestAnimationFrame(() => open(item));
+  });
+
+  window.addEventListener('resize', () => {
+    const openPanel = document.querySelector('#seminars .edu-item[aria-current="true"] .edu-panel');
+    if (openPanel) openPanel.style.maxHeight = openPanel.scrollHeight + 'px';
+  });
+})();
+        // Event listeners
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+        document.getElementById('mobile-theme-toggle').addEventListener('click', toggleTheme);
+        document.getElementById('mobile-menu-toggle').addEventListener('click', toggleMobileMenu);
+        window.addEventListener('scroll', handleNavbarScroll);
+
+        // Initialize
+        updateTime();
+        setInterval(updateTime, 60000);
+        handleNavbarScroll();
+        updateThemeIcon(); // Set initial icon based on theme
+
+        function initProjectSliders(){
+    document.querySelectorAll('.pmodal-slider').forEach(slider=>{
+      const imgs = JSON.parse(slider.dataset.images || '[]');
+      const imgEl = slider.querySelector('img');
+      const set = (i)=>{ if(!imgs.length) return; slider.dataset.index = i; imgEl.src = imgs[i]; };
+      slider.closest('.pmodal-frame').querySelector('[data-prev]')?.addEventListener('click', e=>{
+        e.stopPropagation(); if(!imgs.length) return;
+        const i = (+slider.dataset.index + imgs.length - 1) % imgs.length; set(i);
+      });
+      slider.closest('.pmodal-frame').querySelector('[data-next]')?.addEventListener('click', e=>{
+        e.stopPropagation(); if(!imgs.length) return;
+        const i = (+slider.dataset.index + 1) % imgs.length; set(i);
+      });
+      if (imgs.length) set(0);
+    });
+  }
+  window.addEventListener('load', initProjectSliders);
+
+        // Test Bootstrap functionality and fix accordion
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Accordion script loaded');
+            
+            // Manual accordion functionality (no Bootstrap JS needed)
+            const buttons = document.querySelectorAll('.accordion-button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('data-bs-target');
+                    const collapse = document.querySelector(target);
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    
+                    // Close all other accordions
+                    document.querySelectorAll('.accordion-collapse').forEach(item => {
+                        if (item !== collapse) {
+                            item.classList.remove('show');
+                            item.style.display = 'none';
+                        }
+                    });
+                    document.querySelectorAll('.accordion-button').forEach(btn => {
+                        if (btn !== this) {
+                            btn.setAttribute('aria-expanded', 'false');
+                            btn.classList.add('collapsed');
+                        }
+                    });
+                    
+                    // Toggle current accordion
+                    if (isExpanded) {
+                        collapse.classList.remove('show');
+                        collapse.style.display = 'none';
+                        this.setAttribute('aria-expanded', 'false');
+                        this.classList.add('collapsed');
+                    } else {
+                        collapse.classList.add('show');
+                        collapse.style.display = 'block';
+                        this.setAttribute('aria-expanded', 'true');
+                        this.classList.remove('collapsed');
+                    }
+                });
+            });
+            
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            console.log('Found accordion items:', accordionItems.length);
+            
+            accordionItems.forEach((item, index) => {
+                const button = item.querySelector('.accordion-button');
+                const collapse = item.querySelector('.accordion-collapse');
+                
+                console.log(`Item ${index}:`, {
+                    button: !!button,
+                    collapse: !!collapse,
+                    collapseId: collapse?.id,
+                    target: button?.getAttribute('data-bs-target')
+                });
+                
+                if (button && collapse) {
+                    // Listen for Bootstrap collapse events
+                    collapse.addEventListener('show.bs.collapse', function() {
+                        console.log('Showing collapse:', this.id);
+                        // Remove active class from all items
+                        accordionItems.forEach(otherItem => {
+                            otherItem.classList.remove('active');
+                        });
+                        // Add active class to current item
+                        item.classList.add('active');
+                    });
+                    
+                    collapse.addEventListener('hide.bs.collapse', function() {
+                        console.log('Hiding collapse:', this.id);
+                        item.classList.remove('active');
+                    });
+                }
+            });
+
+            // Add hover effects to skill tags
+            const skillTags = document.querySelectorAll('.skill-tag');
+            skillTags.forEach(tag => {
+                tag.addEventListener('mouseenter', function() {
+                    this.style.background = 'linear-gradient(135deg, var(--primary-bg), var(--primary-text))';
+                    this.style.color = 'white';
+                    this.style.transform = 'scale(1.05)';
+                });
+                
+                tag.addEventListener('mouseleave', function() {
+                    this.style.background = 'linear-gradient(135deg, #f3f4f6, #e5e7eb)';
+                    this.style.color = 'var(--text-primary)';
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: false,
+            offset: 100
+        });
+    </script>
+    
+</body>
+</html>
