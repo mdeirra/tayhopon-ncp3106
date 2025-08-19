@@ -1,0 +1,439 @@
+/* Portfolio Styles - Deirra */
+
+body {
+    font-family: 'Inter Display', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Custom CSS Variables for Theming */
+:root {
+    /* Light Theme - New Palette */
+    --olivine: rgba(150,178,127,1);
+    --oyster-pink: rgba(234,206,210,1);
+    --chelsea-cucumber: rgba(139,167,110,1);
+    --spring-wood: rgba(246,247,240,1);
+    --delta: rgba(177,177,168,1);
+    --tea: rgba(196,187,175,1);
+    --olivine-alt: rgba(156,180,115,1);
+    --battleship-gray: rgba(131,149,125,1);
+    --thatch: rgba(191,162,168,1);
+    --bazaar: rgba(151,130,132,1);
+    
+    /* Applied Theme Variables */
+    --primary-gradient: linear-gradient(to right, var(--olivine), var(--chelsea-cucumber));
+    --primary-hover-gradient: linear-gradient(to right, var(--olivine-alt), var(--battleship-gray));
+    --primary-text: var(--olivine);
+    --primary-bg: var(--chelsea-cucumber);
+    --primary-border: var(--delta);
+    --bg-primary: var(--spring-wood);
+    --bg-secondary: var(--oyster-pink);
+    --text-primary: var(--battleship-gray);
+    --text-secondary: var(--bazaar);
+    --text-tertiary: var(--thatch);
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --nav-bg: rgba(246, 247, 240, 0.9);
+    --border-color: var(--delta);
+    --gradient-bg: linear-gradient(to bottom right, var(--spring-wood), var(--oyster-pink));
+}
+
+.dark {
+    /* Dark Theme - New Palette */
+    --ebb: rgba(232,227,227,1);
+    --black: rgba(5,5,5,1);
+    --dusty-gray: rgba(158,151,150,1);
+    --mahogany: rgba(93,6,12,1);
+    --van-cleef: rgba(75,13,14,1);
+    --opium: rgba(138,102,103,1);
+    --zambezi: rgba(101,89,89,1);
+    --emperor: rgba(80,68,66,1);
+    --mountbatten-pink: rgba(164,124,140,1);
+    --turkish-rose: rgba(184,116,132,1);
+    
+    /* Applied Dark Theme Variables */
+    --primary-gradient: linear-gradient(to right, var(--mahogany), var(--van-cleef));
+    --primary-hover-gradient: linear-gradient(to right, var(--turkish-rose), var(--mountbatten-pink));
+    --primary-text: var(--turkish-rose);
+    --primary-bg: var(--mahogany);
+    --primary-border: var(--opium);
+    --bg-primary: var(--black);
+    --bg-secondary: rgba(5,5,5,0.95);
+    --text-primary: var(--ebb);
+    --text-secondary: var(--dusty-gray);
+    --text-tertiary: var(--zambezi);
+    --card-bg: rgba(5,5,5,0.9);
+    --nav-bg: rgba(5,5,5,0.95);
+    --border-color: var(--emperor);
+    --gradient-bg: linear-gradient(135deg, var(--black) 0%, rgba(93,6,12,0.1) 50%, rgba(164,124,140,0.05) 100%);
+}
+
+/* Carousel specific styles */
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+    width: 300%; /* 3 images * 100% each */
+}
+
+.carousel-item {
+    flex-shrink: 0;
+    width: 33.333%; /* 100% / 3 images */
+    height: 100%;
+    position: relative;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Custom Modern Accordion Styles */
+.accordion {
+    border: none;
+    gap: 1.5rem;
+}
+
+.accordion-item {
+    border: none;
+    margin-bottom: 1.5rem;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    background: var(--card-bg);
+}
+
+.accordion-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.accordion-button {
+    border: none;
+    box-shadow: none;
+    padding: 2rem;
+    border-radius: 16px 16px 0 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, var(--primary-bg), var(--primary-text));
+    color: white;
+    width: 100%;
+    text-align: left;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+}
+
+.accordion-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.accordion-button:hover::before {
+    left: 100%;
+}
+
+.accordion-button::after {
+    content: '+';
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.accordion-button:not(.collapsed)::after {
+    content: '−';
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border: none;
+    outline: 2px solid var(--primary-border);
+    outline-offset: 2px;
+}
+
+.accordion-collapse {
+    border: none;
+    background: var(--card-bg);
+}
+
+.accordion-body {
+    border: none;
+    padding: 2rem;
+    border-top: 1px solid var(--border-color);
+    background: var(--card-bg);
+}
+
+.accordion-collapse:not(.show) {
+    display: none;
+}
+
+.accordion-collapse.show {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 500px;
+    }
+}
+
+/* Experience header styling */
+.experience-header {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.experience-badge {
+    position: absolute;
+    top: -8px;
+    right: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.carousel-button.prev {
+    left: 1rem;
+}
+
+.carousel-button.next {
+    right: 1rem;
+}
+
+/* Custom animations */
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
+}
+
+/* Custom hover effects */
+.group:hover .group-hover\:scale-105 { transform: scale(1.05); }
+.group:hover .group-hover\:translate-x-1 { transform: translateX(0.25rem); }
+.group:hover .group-hover\:rotate-45 { transform: rotate(45deg); }
+.group:hover .group-hover\:rotate-12 { transform: rotate(12deg); }
+
+/* Fade-in-on-scroll styles */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding-top: 60px;
+}
+.modal-content {
+    background-color: var(--card-bg);
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    width: 90%;
+    max-width: 600px;
+    border-radius: 0.5rem;
+    position: relative;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.close-button {
+    color: var(--text-tertiary);
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.close-button:hover,
+.close-button:focus {
+    color: var(--primary-text);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Additional styles for complete functionality */
+.ticker-container {
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 20px 0;
+}
+
+.ticker-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: nowrap;
+    padding-left: 100%;
+    animation: ticker 40s linear infinite;
+}
+
+.ticker-img {
+    width: auto;
+    height: 60px;
+    max-width: 80px;
+    object-fit: contain;
+    flex: 0 0 auto;
+}
+
+@keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+}
+
+/* Educational accordion styles */
+.edu-wrap { position: relative; isolation: isolate; }
+.edu-accent { 
+    height: 6px; 
+    width: 160px; 
+    margin: 12px auto 0; 
+    border-radius: 9999px; 
+    background: linear-gradient(90deg, var(--primary-text), var(--primary-bg), var(--primary-text)); 
+    background-size: 200% 100%; 
+    animation: eduBar 4s linear infinite; 
+}
+@keyframes eduBar { to { background-position: 200% 0; } }
+
+.edu-grid { display: grid; grid-template-columns: 1fr; gap: 22px; }
+@media (min-width: 960px) { 
+    .edu-grid { grid-template-columns: .55fr 1fr; gap: 28px; } 
+    .edu-sticky { position: sticky; top: 24px; align-self: start; } 
+}
+
+.edu-item { 
+    position: relative; 
+    border-radius: 16px; 
+    overflow: clip; 
+    background: var(--card-bg); 
+    border: 1px solid var(--border-color); 
+}
+
+.edu-trigger { 
+    width: 100%; 
+    border: 0; 
+    outline: 0; 
+    background: var(--card-bg); 
+    color: inherit; 
+    display: grid; 
+    grid-template-columns: auto 1fr auto; 
+    align-items: center; 
+    gap: 16px; 
+    padding: 18px 20px; 
+    cursor: pointer; 
+    border-bottom: 1px solid var(--border-color); 
+}
+
+.edu-panel { 
+    overflow: hidden; 
+    max-height: 0; 
+    transition: max-height .45s cubic-bezier(.2,.7,.2,1); 
+    background: var(--card-bg); 
+}
+
+/* Form and contact styles */
+.form-input {
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    border-color: var(--primary-bg) !important;
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(var(--primary-rgb), 0.3);
+}
+
+/* Footer and navigation styles */
+.social-link:hover {
+    background: rgba(var(--primary-rgb), 0.2) !important;
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.3);
+}
+
+.nav-link:hover {
+    color: var(--primary-bg) !important;
+}
+
+.bottom-nav {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
